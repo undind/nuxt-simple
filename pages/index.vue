@@ -1,35 +1,37 @@
 <template>
-  <div class="container">
-    <div>
-      <h1 class="title">
-        mywebsite
-      </h1>
-      <h2 class="subtitle">
-        My tremendous Nuxt.js project
-      </h2>
-      <div class="links">
-        <a
-          href="https://nuxtjs.org/"
-          target="_blank"
-          class="button--green"
-        >
-          Documentation
-        </a>
-        <a
-          href="https://github.com/nuxt/nuxt.js"
-          target="_blank"
-          class="button--grey"
-        >
-          GitHub
-        </a>
-      </div>
-    </div>
-  </div>
+  <section class="util__container">
+    <component
+      v-if="story.content.component"
+      :key="story.content._uid"
+      :blok="story.content"
+      :is="story.content.component">
+    </component>
+  </section>
 </template>
 
 <script>
+import storyblokLivePreview from '@/mixins/storyblockLivePreview'
 
 export default {
+  data() {
+    return {
+      story: {
+        content: {}
+      }
+    }
+  },
+  mixins: [storyblokLivePreview],
+  asyncData(context) {
+    let version = context.query._storyblok || context.isDev ? 'draft' : 'published'
+
+    return context.app.$storyapi.get('cdn/stories/home', {
+      version: version
+    }).then((res) => {
+      return res.data
+    }).catch((res) => {
+      context.error({ statusCode: res.response.status, message: res.response.data })
+    })
+  },
 }
 </script>
 
