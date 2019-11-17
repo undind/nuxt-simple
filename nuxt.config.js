@@ -35,6 +35,9 @@ export default {
   /*
   ** Plugins to load before mounting the App
   */
+  router: {
+    middleware: 'languageDetection'
+  },
   plugins: [
     '~/plugins/component'
   ],
