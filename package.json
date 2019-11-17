@@ -11,7 +11,12 @@
     "generate": "nuxt generate"
   },
   "dependencies": {
+    "normalize.css": "^8.0.1",
     "nuxt": "^2.0.0"
   },
-  "devDependencies": {}
+  "devDependencies": {
+    "css-loader": "^3.2.0",
+    "node-sass": "^4.13.0",
+    "sass-loader": "^8.0.0"
+  }
 }
